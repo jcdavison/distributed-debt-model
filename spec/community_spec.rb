@@ -1,6 +1,5 @@
 require '../community'
 require 'rspec'
-require 'pry'
 
 describe Community do
   context 'Communities are made up of people' do
@@ -30,8 +29,6 @@ describe Community do
         @community.connect @alice.name, @tom.name
         @community.connect @alice.name, @elise.name
         @community.connect @alice.name, @chris.name
-        @community.connect @betty.name, @dan.name
-        @community.connect @chris.name, @betty.name
       end
 
       it '.network_members(member_name)' do
@@ -73,6 +70,11 @@ describe Community do
 
       it '.lend(member, amount_greater_than_network_limit)' do
         expect(lambda {@community.lend @chris, 100}).to raise_error Community::Error::InsufficientNetworkValue
+      end
+
+      it '.proportional_liability member' do
+        @community.lend @chris, 10
+        expect(@community.proportional_liability @chris ).to be -6.0
       end
     end
   end

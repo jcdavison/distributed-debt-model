@@ -16,8 +16,8 @@ class Community
   end
 
   def connect name_1, name_2 
-    entities = [name_1, name_2]
-    connections.push entities unless connections.include? entities
+    relationship = [name_1, name_2]
+    connections.push relationship unless connections.include? relationship
   end
 
   def network_members entity_name
@@ -31,6 +31,11 @@ class Community
 
   def network_liability entity_name
     sum_indebtedness network_members entity_name
+  end
+
+  def proportional_liability member
+    share_network_value =  member.contribution.to_f / network_value(member.name)
+    (share_network_value * network_liability(member.name)).round 2
   end
 
   def available_to_network entity_name
