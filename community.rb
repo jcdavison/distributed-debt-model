@@ -17,8 +17,16 @@ class Community
     connections.push entities unless connections.include? entities
   end
 
-  def network_contribution entity_name
+  def network_value entity_name
     sum_contributions network_members entity_name
+  end
+
+  def network_liability entity_name
+    sum_indebtedness network_members entity_name
+  end
+
+  def available_to_network entity_name
+    network_value(entity_name) + network_liability(entity_name)
   end
 
   def network_members entity_name
@@ -29,29 +37,25 @@ class Community
   def sum_contributions selected_members
     selected_members.map(&:contribution).reduce :+
   end
-end
 
-class Person
-  attr_accessor :contribution, :name
-  def initialize args
-    @contribution = args[:contribution]
-    @name = args[:name]
+  def sum_indebtedness selected_members
+    selected_members.map(&:indebtedness).reduce :+
+  end
+
+  def lend member, amount
+    if available_to_network(member.name) >= amount
+      member.indebtedness = amount
+    else
+      raise "Not Enough $$"
+    end
   end
 end
 
-@community = Community.new
-
-@alice = Person.new({name: 'alice', contribution: 10})
-@tom = Person.new({name: 'tom', contribution: 5})
-@chris = Person.new({name: 'chris', contribution: 15})
-@elise = Person.new({name: 'elise', contribution: 5})
-@betty = Person.new({name: 'betty', contribution: 5})
-@dan = Person.new({name: 'dan', contribution: 5})
-
-@community.populate([@alice, @tom, @chris, @elise, @betty, @dan])
-
-@community.connect @alice.name, @tom.name
-@community.connect @alice.name, @elise.name
-@community.connect @alice.name, @chris.name
-@community.connect @betty.name, @dan.name
-@community.connect @chris.name, @betty.name
+class Person
+  attr_accessor :contribution, :name, :indebtedness
+  def initialize args
+    @contribution = args[:contribution] || 0
+    @name = args[:name] || 'el duderino'
+    @indebtedness = args[:indebtedness] || 0
+  end
+end
