@@ -1,5 +1,8 @@
 class Community
   attr_accessor :connections, :members
+  module Error
+    class InsufficientNetworkValue < StandardError; end
+  end
 
   def initialize
     @connections = []
@@ -17,6 +20,11 @@ class Community
     connections.push entities unless connections.include? entities
   end
 
+  def network_members entity_name
+    names_of_members = connections.select {|c| c.include? entity_name}.flatten.uniq
+    members.select {|member| names_of_members.include? member.name}
+  end
+
   def network_value entity_name
     sum_contributions network_members entity_name
   end
@@ -29,11 +37,6 @@ class Community
     network_value(entity_name) + network_liability(entity_name)
   end
 
-  def network_members entity_name
-    names_of_members = connections.select {|c| c.include? entity_name}.flatten.uniq
-    members.select {|member| names_of_members.include? member.name}
-  end
-
   def sum_contributions selected_members
     selected_members.map(&:contribution).reduce :+
   end
@@ -44,9 +47,9 @@ class Community
 
   def lend member, amount
     if available_to_network(member.name) >= amount
-      member.indebtedness = amount
+      member.indebtedness = -amount
     else
-      raise "Not Enough $$"
+      raise Error::InsufficientNetworkValue
     end
   end
 end
@@ -59,3 +62,4 @@ class Person
     @indebtedness = args[:indebtedness] || 0
   end
 end
+
