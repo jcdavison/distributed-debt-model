@@ -62,4 +62,3 @@ class Person
     @indebtedness = args[:indebtedness] || 0
   end
 end
-
