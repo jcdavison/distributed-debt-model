@@ -1,12 +1,12 @@
-require './community'
+require './setup.rb'
 
 # create people
-@alice = Person.new({name: 'alice', contribution: 10})
-@tom = Person.new({name: 'tom', contribution: 5})
-@chris = Person.new({name: 'chris', contribution: 15})
-@elise = Person.new({name: 'elise', contribution: 5})
-@betty = Person.new({name: 'betty', contribution: 5})
-@dan = Person.new({name: 'dan', contribution: 5})
+@alice = Member.new({name: 'alice', contribution: 10})
+@tom = Member.new({name: 'tom', contribution: 5})
+@chris = Member.new({name: 'chris', contribution: 15})
+@elise = Member.new({name: 'elise', contribution: 5})
+@betty = Member.new({name: 'betty', contribution: 5})
+@dan = Member.new({name: 'dan', contribution: 5})
 
 # build and populate people
 @community = Community.new
@@ -19,6 +19,4 @@ require './community'
 @community.connect @betty.name, @dan.name
 @community.connect @chris.name, @betty.name
 
-# make a loan to alice
-
-@community.lend @alice, 5
+LendBot.generate_proportional_loans lendee: @alice, amount: 5, community: @community
