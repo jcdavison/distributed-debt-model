@@ -18,5 +18,7 @@ RSpec.shared_context 'create and populate community', :a => :b do
     @community.connect @alice.name, @tom.name
     @community.connect @alice.name, @elise.name
     @community.connect @alice.name, @chris.name
+    @community.connect @betty.name, @chris.name
+    @community.connect @betty.name, @dan.name
   end
 end

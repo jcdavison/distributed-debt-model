@@ -38,6 +38,14 @@ class Community
     sum_contributions primary_network_members member_name
   end
 
+  def primary_network_net_value member_name
+    primary_network_contribution_value(member_name) - primary_network_sum_loans_lent(member_name)
+  end
+
+  def primary_network_sum_loans_lent member_name
+    primary_network_members(member_name).map {|member| sum_loans_lent(member)}.flatten.reduce :+
+  end
+
   def proportional_network_weight member_who_lends, member_to_anchor
     # a member can lend only an amount that reflects the proportion
     # of contribution that member has made to the anchor member's primary lending network
