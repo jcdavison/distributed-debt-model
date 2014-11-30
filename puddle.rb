@@ -19,4 +19,4 @@ require './setup.rb'
 @community.connect @betty.name, @dan.name
 @community.connect @chris.name, @betty.name
 
-LendBot.generate_proportional_loans lendee: @alice, amount: 5, community: @community
+LendBot.generate_proportional_loans lendee: @alice, amount: 10, community: @community

@@ -38,9 +38,9 @@ describe Community, :type=> :model do
         expect(@community.sum_contributions members).to be 35
       end
 
-      it '#primary_network_value(member_name)' do
+      it '#primary_network_contribution_value(member_name)' do
         expect(@community).to receive(:sum_contributions).once 
-        @community.primary_network_value 'alice'
+        @community.primary_network_contribution_value 'alice'
       end
 
       it '#proportional_network_weight' do

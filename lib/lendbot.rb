@@ -54,12 +54,11 @@ class LendBot
   end
 
   def available_to_lend member
-    member.contribution + sum_of_loans_lent(member)
+    member.contribution + sum_loans_lent(member) 
   end
 
-  def sum_of_loans_lent member
-    return 0 if community.loans.empty?
-    community.loans.select {|loan| loan.lendor == member.name}.map(&:amount).reduce :+
+  def sum_loans_lent member
+    community.sum_loans_lent member
   end
 
   def lendee_name
