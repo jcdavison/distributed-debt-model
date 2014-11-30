@@ -35,7 +35,7 @@ describe Community, :type=> :model do
 
       it '#sum_contributions(members)' do
         members = @community.primary_network_members('alice')
-        expect(@community.sum_contributions members).to be 35
+        expect(@community.sum_contributions members).to be 3500
       end
 
       it '#primary_network_contribution_value(member_name)' do
@@ -44,7 +44,7 @@ describe Community, :type=> :model do
       end
 
       it '#proportional_network_weight' do
-        expect(@community.proportional_network_weight(@tom, @alice)).to eq(0.1428571429)
+        expect(@community.proportional_network_weight(@tom, @alice)).to eq(0.14)
       end
     end
 

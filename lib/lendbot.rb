@@ -16,7 +16,7 @@ class LendBot
   end
 
   def weighted_loan_value member
-    (community.proportional_network_weight(member, community_member(lendee_name)) * amount).round 10
+    (community.proportional_network_weight(member, community_member(lendee_name)) * amount).round 0
   end
 
   def proportional_loan_lendor proportional_loan

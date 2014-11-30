@@ -41,7 +41,7 @@ class Community
   def proportional_network_weight member_who_lends, member_to_anchor
     # a member can lend only an amount that reflects the proportion
     # of contribution that member has made to the anchor member's primary lending network
-    (member_who_lends.contribution.to_f / primary_network_contribution_value(member_to_anchor.name)).round(10)
+    (member_who_lends.contribution.to_f / primary_network_contribution_value(member_to_anchor.name)).round(2)
   end
 
   def lend new_loan

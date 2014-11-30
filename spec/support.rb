@@ -1,11 +1,11 @@
 RSpec.shared_context 'create community', :a => :b do
   before do
-    @alice = Member.new({name: 'alice', contribution: 10})
-    @tom = Member.new({name: 'tom', contribution: 5})
-    @chris = Member.new({name: 'chris', contribution: 15})
-    @elise = Member.new({name: 'elise', contribution: 5})
-    @betty = Member.new({name: 'betty', contribution: 5})
-    @dan = Member.new({name: 'dan', contribution: 5})
+    @alice = Member.new({name: 'alice', contribution: 1000})
+    @tom = Member.new({name: 'tom', contribution: 500})
+    @chris = Member.new({name: 'chris', contribution: 1500})
+    @elise = Member.new({name: 'elise', contribution: 500})
+    @betty = Member.new({name: 'betty', contribution: 500})
+    @dan = Member.new({name: 'dan', contribution: 500})
     @community = Community.new
   end
 end

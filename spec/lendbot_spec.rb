@@ -5,8 +5,8 @@ describe LendBot, :type=> :model do
     include_context 'create and populate community'
 
     before do
-      @lendbot_proc = Proc.new {LendBot.new(lendee: @alice, amount: 10, community: @community)}
-      @lendbot = LendBot.new(lendee: @alice, amount: 10, community: @community)
+      @lendbot_proc = Proc.new {LendBot.new(lendee: @alice, amount: 1000, community: @community)}
+      @lendbot = LendBot.new(lendee: @alice, amount: 1000, community: @community)
     end
 
     context 'and can be tempermental' do
@@ -25,14 +25,14 @@ describe LendBot, :type=> :model do
         expect(@lendbot.proportional_loans.length).to eq 4
       end
 
-      it '#proportional_loans.select { loan.value == 1.428}.count == 2' do
-        loan_count = @lendbot.proportional_loans.select {|l| l[:amount] == 1.428571429}.length
+      it '#proportional_loans.select {loan.value == 140}.count == 2' do
+        loan_count = @lendbot.proportional_loans.select {|l| l[:amount] == 140}.length
         expect(loan_count).to eq 2
       end
     end
 
     it '#weighted_loan_value member' do
-      expect(@lendbot.weighted_loan_value @chris).to eq 4.285714286
+      expect(@lendbot.weighted_loan_value @chris).to eq 430
     end
 
     it '#proportional_loan_lendor' do
@@ -49,26 +49,26 @@ describe LendBot, :type=> :model do
   context 'LendBot.generate_proportional_loans' do
     include_context 'create and populate community'
     before do
-      args = {lendee: @alice, amount: 10, community: @community}
+      args = {lendee: @alice, amount: 1000, community: @community}
       LendBot.generate_proportional_loans(args)
     end
     it '#community.loans.count == 4' do
       expect(@community.loans.count).to eq 4
     end
 
-    it '#community.loans.select(loan.lendor.name == tom).first.value == 12.33' do
-      expect(@community.loans.select {|loan| loan.lendor == 'tom'}.first.amount).to eq 1.428571429
+    it '#community.loans.select(loan.lendor.name == tom).first.value == 140' do
+      expect(@community.loans.select {|loan| loan.lendor == 'tom'}.first.amount).to eq 140
     end
 
     it '#all_members_can_lend?' do
       expect_any_instance_of(LendBot).to receive :all_members_can_lend? 
-      args = {lendee: @alice, amount: 10, community: @community}
+      args = {lendee: @alice, amount: 1000, community: @community}
       LendBot.generate_proportional_loans(args)
     end
 
     it '#build_new_loan' do
       expect_any_instance_of(LendBot).to receive(:build_new_loan).exactly(4).times
-      args = {lendee: @alice, amount: 10, community: @community}
+      args = {lendee: @alice, amount: 1000, community: @community}
       LendBot.generate_proportional_loans(args)
     end
   end

@@ -6,7 +6,7 @@ describe Loan, :type=> :model do
     expect(loan.amount).to be 0
   end
 
-  it 'knows its own worth in life' do
+  it 'knows its value in life' do
     loan = Loan.new amount: 100
     expect(loan.amount).to be 100
   end
