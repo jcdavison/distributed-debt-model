@@ -10,4 +10,9 @@ describe Loan, :type=> :model do
     loan = Loan.new amount: 100
     expect(loan.amount).to be 100
   end
+
+  it 'knows to keep track of when it was created' do
+    expect_any_instance_of(Loan).to receive(:set_time_with_seconds).once
+    loan = Loan.new amount: 100
+  end
 end

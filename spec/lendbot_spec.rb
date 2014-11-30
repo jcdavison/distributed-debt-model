@@ -15,7 +15,7 @@ describe LendBot, :type=> :model do
         expect(bad_lendbot).to raise_error ArgumentError
       end
 
-      it 'but plays nice with the propery intitialization arguments' do
+      it 'but plays nice with the proper intitialization arguments' do
         expect(@lendbot_proc).not_to raise_error
       end
     end
@@ -56,7 +56,7 @@ describe LendBot, :type=> :model do
       expect(@community.loans.count).to eq 4
     end
 
-    it '#community.loans.select(loan.lendor.name == tom).first.value == 140' do
+    it '#community.loans.select {loan.lendor.name == tom}.first.value == 140' do
       expect(@community.loans.select {|loan| loan.lendor == 'tom'}.first.amount).to eq 140
     end
 
